@@ -54,7 +54,7 @@
     * click `DOWNLOAD JSON` button in `OAuth client created` dialog.
     * click `OK` button.
 
-# App Engine
+## App Engine
 
 1. set project id and login
 
@@ -68,10 +68,12 @@
 
 2. create Google Cloud resources.
 
+    if apply fails, try again.
+
     ```
-    cd /path/to/repository/root
+    cd /path/to/repository/root/protect-webapp-with-iap
     terraform init
-    # iap_client_id and iap_client_secret refer to the JSON downloaded in step 3. 
+    # iap_client_id and iap_client_secret refer to the JSON downloaded in Advance preparation step 3. 
     terraform plan -var="accessible_email={accessible_email}" -var="{client_id}" -var="iap_client_secret={client_secret}" -var="{project_you_created}"
     terraform apply -var="accessible_email={accessible_email}" -var="{client_id}" -var="iap_client_secret={client_secret}" -var="{project_you_created}"
     ```
@@ -119,5 +121,33 @@
     * verify authorization.
 
 
-# Cloud Run
+## Cloud Run
 
+1. set project id and login
+
+    ```
+    # set target project id
+    gcloud config set project {project you created}
+
+    # log in owner user
+    gcloud auth application-default login
+    ```
+
+2. create Google Cloud resources.
+
+    if apply fails, try again.
+
+    ```
+    cd /path/to/repository/root/protect-webapp-with-iap
+    terraform init
+    # iap_client_id and iap_client_secret refer to the JSON downloaded in  Advance preparation step 3. 
+    terraform plan -var="accessible_email={accessible_email}" -var="{client_id}" -var="iap_client_secret={client_secret}" -var="{project_you_created}"
+    terraform apply -var="accessible_email={accessible_email}" -var="{client_id}" -var="iap_client_secret={client_secret}" -var="{project_you_created}"
+    ```
+
+3. create Docker image.
+
+    ```
+    cd cloud_run_image
+    gcloud builds submit --config cloudbuild.yaml --substitutions=_LOCATION="asia-northeast1",_REPOSITORY="hello-cloudrun",_IMAGE="hello-cloudrun"
+    ```
