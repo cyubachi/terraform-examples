@@ -18,3 +18,17 @@ resource "google_project_service" "enable_cloudrun_service" {
   project = var.project
   service = "run.googleapis.com"
 }
+
+# Compute Engine
+# Required to reserve load balancer ip address and create ssl certificate.
+resource "google_project_service" "enable_compute_engine_service" {
+  project = var.project
+  service = "compute.googleapis.com"
+}
+
+# Cloud DNS
+# Required to open console page.
+resource "google_project_service" "enable_cloud_dns_service" {
+  project = var.project
+  service = "dns.googleapis.com"
+}

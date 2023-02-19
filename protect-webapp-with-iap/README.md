@@ -151,3 +151,11 @@
     cd cloud_run_image
     gcloud builds submit --config cloudbuild.yaml --substitutions=_LOCATION="asia-northeast1",_REPOSITORY="hello-cloudrun",_IMAGE="hello-cloudrun"
     ```
+
+    
+
+4. create cloud run revision
+
+    ```
+    gcloud run deploy hello-cloudrun --image asia-northeast1-docker.pkg.dev/{project_you_created}/hello-cloudrun/hello-cloudrun:latest:latest --region asia-northeast1
+    ```
