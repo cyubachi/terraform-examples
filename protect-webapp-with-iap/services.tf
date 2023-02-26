@@ -32,3 +32,11 @@ resource "google_project_service" "enable_cloud_dns_service" {
   project = var.project
   service = "dns.googleapis.com"
 }
+
+
+# GKE
+# Required to create GKE cluster.
+resource "google_project_service" "enable_container_service" {
+  project = var.project
+  service = "container.googleapis.com"
+}

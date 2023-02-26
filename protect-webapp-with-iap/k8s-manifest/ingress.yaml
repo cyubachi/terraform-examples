@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: test-ingress
+  annotations:
+    kubernetes.io/ingress.regional-static-ip-name: "gke-global-ip"
+    kubernetes.io/ingress.class: "gce"
+    networking.gke.io/managed-certificates: gke-cert
+    kubernetes.io/ingress.allow-http: "true"
+spec:
+  defaultBackend:
+    service:
+      name: gke-app
+      port:
+        number: 80
+---
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: gke-cert
+spec:
+  domains:
+    - {gke-app-domain}

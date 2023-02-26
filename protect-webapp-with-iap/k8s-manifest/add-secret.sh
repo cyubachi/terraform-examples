@@ -1,0 +1,1 @@
+kubectl create secret generic gke-secret --from-literal="client_id={client_id}" --from-literal="client_secret={client_secret}"
