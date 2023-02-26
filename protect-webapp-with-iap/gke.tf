@@ -18,6 +18,9 @@ resource "google_project_iam_member" "add_editor_role" {
 resource "google_compute_network" "gke_network" {
   project = var.project
   name    = "gke-network"
+  depends_on = [
+    google_project_service.enable_compute_engine_service
+  ]
 }
 
 resource "google_compute_subnetwork" "gke_subnet" {
@@ -26,6 +29,10 @@ resource "google_compute_subnetwork" "gke_subnet" {
   network       = google_compute_network.gke_network.id
   region        = "asia-northeast1"
   ip_cidr_range = "10.0.0.0/15"
+  depends_on = [
+    google_compute_network.gke_network
+  ]
+
 }
 
 resource "google_compute_firewall" "ssh_port" {
@@ -38,6 +45,9 @@ resource "google_compute_firewall" "ssh_port" {
     ports    = ["22"]
   }
   source_tags = ["ssh"]
+  depends_on = [
+    google_compute_network.gke_network
+  ]
 }
 
 resource "google_container_cluster" "gke_cluster" {
